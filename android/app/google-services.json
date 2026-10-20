@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033442923939",
+    "project_id": "beauty-mart-9043d",
+    "storage_bucket": "beauty-mart-9043d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033442923939:android:c13e4ee298a21a34497616",
+        "android_client_info": {
+          "package_name": "com.barakahbooks.barakah_books_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033442923939-sfgclj762vr6hjtgrtqgr59m4ph7117p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP6ErrkwaDQTjBfEKZ3KQbYbsWhW-vAYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033442923939-sfgclj762vr6hjtgrtqgr59m4ph7117p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
