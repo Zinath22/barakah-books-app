@@ -6,6 +6,7 @@ import 'firebase_options.dart';
 import 'providers/auth_state.dart';
 import 'providers/cart_provider.dart';
 import 'screens/main_shell.dart';
+import 'providers/wishlist_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +17,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthState()),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+         ChangeNotifierProvider(create: (_) => WishlistProvider()), 
       ],
       child: const BarakahBooksApp(),
     ),

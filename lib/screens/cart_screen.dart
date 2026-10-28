@@ -4,6 +4,9 @@ import '../core/theme.dart';
 import '../core/utils.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/book_cover.dart';
+import '../providers/auth_state.dart';
+import 'checkout_screen.dart';
+import 'login_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -109,14 +112,25 @@ class CartScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 4),
-                        Text('ডেলিভারি চার্জ পরের ধাপে যোগ হবে',
+                                                Text('ক্যাশ অন ডেলিভারি — বই হাতে পেয়ে টাকা দিন',
                             style: TextStyle(fontSize: 12, color: Colors.grey.shade600)),
                         const SizedBox(height: 12),
                         FilledButton(
                           style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48)),
-                          onPressed: () => ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Login আর অর্ডার পরের অংশে যোগ হবে, ইনশাআল্লাহ')),
-                          ),
+                                                    onPressed: () {
+                            final loggedIn = context.read<AuthState>().isLoggedIn;
+                            if (!loggedIn) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('অর্ডার করতে আগে login করুন')),
+                              );
+                            }
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => loggedIn ? const CheckoutScreen() : const LoginScreen(),
+                              ),
+                            );
+                          },
                           child: const Text('অর্ডার করুন', style: TextStyle(fontSize: 16)),
                         ),
                       ],

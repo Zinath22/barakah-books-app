@@ -18,3 +18,20 @@ const categories = [
   'শিশু-কিশোর',
   'ইতিহাস',
 ];
+
+// অর্ডারের অবস্থা বাংলায়
+String orderStatusBn(String s) => switch (s.toLowerCase()) {
+      'pending' => 'অপেক্ষমাণ',
+      'approved' || 'confirmed' => 'নিশ্চিত হয়েছে',
+      'shipped' => 'পাঠানো হয়েছে',
+      'delivered' => 'পৌঁছে গেছে',
+      'cancelled' || 'rejected' => 'বাতিল',
+      _ => s,
+    };
+
+// তারিখ: ১৮/১০/২০২৬
+String dateBn(DateTime? d) {
+  if (d == null) return '';
+  return toBn('${d.day}/${d.month}/${d.year}');
+}
+

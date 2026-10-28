@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../core/theme.dart';
 import '../core/utils.dart';
 import '../models/book.dart';
-import '../widgets/book_cover.dart';
-import 'package:provider/provider.dart';
 import '../providers/cart_provider.dart';
+import '../widgets/book_cover.dart';
+import '../widgets/review_section.dart';
+import '../widgets/wishlist_button.dart';
 
 class BookDetailScreen extends StatelessWidget {
   final Book book;
@@ -24,7 +26,12 @@ class BookDetailScreen extends StatelessWidget {
     ].where((s) => s[1].isNotEmpty).toList();
 
     return Scaffold(
-      appBar: AppBar(title: Text(book.title, overflow: TextOverflow.ellipsis)),
+      appBar: AppBar(
+        title: Text(book.title, overflow: TextOverflow.ellipsis),
+        actions: [
+          WishlistButton(book: book), // ❤️ উইশলিস্ট বাটন
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -61,7 +68,8 @@ class BookDetailScreen extends StatelessWidget {
           ),
           const SizedBox(height: 14),
 
-                    Builder(builder: (context) {
+          // কার্টে যোগ করার বাটন
+          Builder(builder: (context) {
             final inCart = context.watch<CartProvider>().contains(book.id);
             return FilledButton.icon(
               onPressed: book.inStock
@@ -101,12 +109,17 @@ class BookDetailScreen extends StatelessWidget {
               ),
             ),
 
+          // বই সম্পর্কে
           if (book.description.isNotEmpty) ...[
             const SizedBox(height: 20),
             const Text('বই সম্পর্কে', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             Text(book.description, style: const TextStyle(height: 1.6)),
           ],
+
+          // ⭐ পাঠকদের রিভিউ
+          ReviewSection(bookId: book.id),
+          const SizedBox(height: 24),
         ],
       ),
     );

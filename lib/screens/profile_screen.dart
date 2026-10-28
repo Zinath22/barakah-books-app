@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../core/theme.dart';
+import '../core/utils.dart';
 import '../providers/auth_state.dart';
+import '../providers/wishlist_provider.dart';
 import 'login_screen.dart';
+import 'my_orders_screen.dart';
+import 'wishlist_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -49,10 +53,12 @@ class ProfileScreen extends StatelessWidget {
   // Login করা থাকলে
   Widget _loggedIn(BuildContext context, AuthState auth) {
     final initial = auth.name.isNotEmpty ? auth.name[0].toUpperCase() : 'U';
+    final wishCount = context.watch<WishlistProvider>().count;
 
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
+        // নাম, ইমেইল, অ্যাডমিন ব্যাজ
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
@@ -89,19 +95,52 @@ class ProfileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 16),
 
+        // মেনু
         Container(
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
           child: Column(
             children: [
+              // আমার অর্ডার
               ListTile(
                 leading: const Icon(Icons.receipt_long_outlined),
                 title: const Text('আমার অর্ডার'),
                 trailing: const Icon(Icons.chevron_right),
-                onTap: () => ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('অর্ডার পরের অংশে যোগ হবে, ইনশাআল্লাহ')),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MyOrdersScreen()),
                 ),
               ),
               const Divider(height: 1),
+
+              // ❤️ উইশলিস্ট (নতুন)
+              ListTile(
+                leading: const Icon(Icons.favorite_border, color: Colors.red),
+                title: const Text('উইশলিস্ট'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (wishCount > 0)
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.red.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(toBn(wishCount),
+                            style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                      ),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const WishlistScreen()),
+                ),
+              ),
+              const Divider(height: 1),
+
+              // Logout
               ListTile(
                 leading: const Icon(Icons.logout, color: Colors.red),
                 title: const Text('Logout', style: TextStyle(color: Colors.red)),
