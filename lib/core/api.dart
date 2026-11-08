@@ -6,8 +6,8 @@ import 'config.dart';
 class Api {
   static final Dio dio = Dio(BaseOptions(
     baseUrl: AppConfig.apiBase,
-    connectTimeout: const Duration(seconds: 10),
-    receiveTimeout: const Duration(seconds: 15),
+          connectTimeout: const Duration(seconds: 60),
+          receiveTimeout: const Duration(seconds: 60),
   ))
     ..interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
